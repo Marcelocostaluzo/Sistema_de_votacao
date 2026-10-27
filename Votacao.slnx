@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Votacao.Tests/Votacao.Tests.csproj" />
+  <Project Path="Votacao/Votacao.csproj" />
+</Solution>
