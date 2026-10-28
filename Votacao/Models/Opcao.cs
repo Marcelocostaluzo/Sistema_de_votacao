@@ -1,8 +1,9 @@
 using SistemaDeVotacao.Exceptions;
+using SistemaDeVotacao.Interfaces;
 
 namespace SistemaDeVotacao.Models;
 
-public class Opcao
+public class Opcao : IEntidade
 {
     public int Id { get; private set; }
     public string Nome { get; private set; }
