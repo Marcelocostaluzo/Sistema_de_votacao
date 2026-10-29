@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace SistemaDeVotacao.Helpers;
 
 public class Helper
@@ -35,6 +37,19 @@ public class Helper
             if (int.TryParse(Console.ReadLine(), out int valido)) return valido;
 
             Console.WriteLine("[ERRO] entrada inválida! \nTente novamente.");
+        }
+    }
+
+    public static string ValidarSaidaMatricula(string mensagem)
+    {
+        var formato = new Regex(@"^[A-Z]-\d{3}$");
+        while (true)
+        {
+            Console.Write($"{mensagem}: ");
+            string valido = Console.ReadLine()!.Trim() ?? string.Empty;
+
+            if (formato.IsMatch(valido)) return valido;
+            Console.WriteLine("[ERRO] entrada inválida \nTente novamente.");
         }
     }
 }
