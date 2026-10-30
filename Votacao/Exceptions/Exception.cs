@@ -14,3 +14,8 @@ public class MatriculaNaoPodeSerVazioOuNuloException : Exception
 {
     public MatriculaNaoPodeSerVazioOuNuloException(string mensagem) : base(mensagem) { }
 }
+
+public class MatriculaJaRegistradaException : Exception
+{
+    public MatriculaJaRegistradaException(string mensagem) : base(mensagem) { }
+}
