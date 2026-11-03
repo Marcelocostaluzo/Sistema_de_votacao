@@ -19,3 +19,8 @@ public class MatriculaJaRegistradaException : Exception
 {
     public MatriculaJaRegistradaException(string mensagem) : base(mensagem) { }
 }
+
+public class VotanteJaVotouException : Exception
+{
+    public VotanteJaVotouException(string mensagem) : base (mensagem) { }
+}
