@@ -6,6 +6,7 @@ public class Votante
 {
     public string Nome { get; private set; }
     public string Matricula { get; private set; }
+    public bool JaVotou { get; private set;} = false;
 
     public Votante(string? nome, string? matricula)
     {
@@ -14,5 +15,11 @@ public class Votante
 
         Nome = nome;
         Matricula = matricula;
+    }
+
+    public void Votou()
+    {
+        if (JaVotou) throw new VotanteJaVotouException("O voto já foi feito");
+        JaVotou = true;
     }
 }
