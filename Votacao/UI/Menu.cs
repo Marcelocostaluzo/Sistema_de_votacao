@@ -1,3 +1,4 @@
+using System.Data.Common;
 using SistemaDeVotacao.Exceptions;
 using SistemaDeVotacao.Helpers;
 using SistemaDeVotacao.Models;
@@ -7,7 +8,7 @@ namespace SistemaDeVotacao.UI;
 
 public class Menu
 {
-    public static void MenuPrincipal(ListaOpcoes<Opcao> listaOpcoes, ListaDeVotantes listaDeVotantes)
+    public static void MenuPrincipal(ListaOpcoes<Opcao> listaOpcoes, ListaDeVotantes listaDeVotantes, Historico historico)
     {
         string[] opcoes = [ "Nova votação", "Iniciar votação", "Ver resultado", "Histórico", "Sair" ];
 
@@ -19,9 +20,9 @@ public class Menu
             switch (escolha)
             {
                 case 1: NovaVotacao(listaOpcoes, listaDeVotantes); break;
-                case 2: IniciarVotacao(listaOpcoes, listaDeVotantes); break;
+                case 2: IniciarVotacao(listaOpcoes, listaDeVotantes, historico); break;
                 case 3: VerResultado(listaOpcoes); break;
-                case 4: Helper.Mensagem("A fazer...", true, true); break;
+                case 4: Historico(historico); break;
                 case 5: Helper.Mensagem("Sair", true, false); return;
                 default: Helper.Mensagem("Escolha uma opção válida", true, false); break;
             }
@@ -80,7 +81,7 @@ public class Menu
         }
     }
 
-    private static void IniciarVotacao(ListaOpcoes<Opcao> listaOpcoes, ListaDeVotantes listaDeVotantes)
+    private static void IniciarVotacao(ListaOpcoes<Opcao> listaOpcoes, ListaDeVotantes listaDeVotantes, Historico historico)
     {
         if (listaOpcoes.Registro.Count == 0)
         {
@@ -112,6 +113,11 @@ public class Menu
             else 
                 Helper.Mensagem("Matrícula não encontrada.", true, true);
         }
+
+        var ganhador = listaOpcoes.Registro.OrderByDescending(o => o.QuantidadeVotos).First();
+
+        RegistroVotacao registro = new RegistroVotacao(listaOpcoes.Registro.Count, listaDeVotantes.Registro.Count, ganhador.Nome, ganhador.QuantidadeVotos, DateTime.Now);
+        historico.Adicionar(registro);
 
         Helper.Mensagem("Votação finalizada.", true, true);
     }
@@ -145,21 +151,38 @@ public class Menu
     {
         Helper.Mensagem("=== Resultado ===\n", true, false);
 
+        Console.WriteLine($"{"ID", -2} | {"Nome", -22} | {"Quantidade de votos", -22} \n-----------------------------------------------------------------------------------------");
+
         if (listaOpcoes.Registro.Count == 0)
         {
-            Helper.Mensagem("A lista de opções está vazia.", false, true);
+            Helper.Mensagem("\nA lista de opções está vazia", false, true);
             return;
         }
 
-        if (listaOpcoes.Registro.Max(o => o.QuantidadeVotos) == 0)
+        if (listaOpcoes.Registro.Max(o => o.QuantidadeVotos == 0))
         {
-            Helper.Mensagem("A votação ainda não foi iniciada.", false, true);
+            Helper.Mensagem("\nA votação ainda não foi iniciada.", false, true);
             return;
         }
 
-        Console.WriteLine($"{"ID", -2} | {"Nome", -22} | {"Quantidade de votos", -22} \n---------------------------------------------------------------------------------");
-        foreach (var opcao in listaOpcoes.Registro)
+        foreach (var opcao in listaOpcoes.Registro.OrderByDescending(o => o.QuantidadeVotos))
             Console.WriteLine($"{opcao.Id, -2} | {opcao.Nome, -22} | {opcao.QuantidadeVotos, -22}");
+        Helper.Mensagem("", false, true);
+    }
+
+    private static void Historico(Historico historico)
+    {
+        Helper.Mensagem("=== Histórico ===\n", true, false);
+
+        Console.WriteLine($"{"Total de opções", -16} | {"Total de votantes", -16} | {"Ganhador", -22} | {"Total de votos", -16} | {"Data", -14}\n----------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        if (historico.Registro.Count == 0)
+        {
+            Helper.Mensagem("\nHistórico está vazio.", false, true);
+            return;
+        }
+
+        foreach (var registro in historico.Registro)
+            Console.WriteLine($"{registro.TotalOpcoes, -16} | {registro.TotalVotantes, -16} | {registro.Ganhador, -22} | {registro.TotalVotosGanhador, -16} | {registro.DataVotacao.ToString("dd/MM/yyyy"), -14}");
         Helper.Mensagem("", false, true);
     }
 }

@@ -10,7 +10,8 @@ public class Program
     {
         ListaOpcoes<Opcao> listaOpcoes = new ListaOpcoes<Opcao>();
         ListaDeVotantes listaDeVotantes = new ListaDeVotantes();
+        Historico historico = new Historico();
 
-        Menu.MenuPrincipal(listaOpcoes, listaDeVotantes);
+        Menu.MenuPrincipal(listaOpcoes, listaDeVotantes, historico);
     }
 }
