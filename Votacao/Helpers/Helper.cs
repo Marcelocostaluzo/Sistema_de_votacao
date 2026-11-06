@@ -46,7 +46,7 @@ public class Helper
         while (true)
         {
             Console.Write($"{mensagem}: ");
-            string valido = Console.ReadLine()!.Trim() ?? string.Empty;
+            string valido = Console.ReadLine()?.Trim() ?? string.Empty;
 
             if (formato.IsMatch(valido)) return valido;
             Console.WriteLine("[ERRO] entrada inválida \nTente novamente.");

@@ -30,13 +30,16 @@ public class Menu
 
     private static void NovaVotacao(ListaOpcoes<Opcao> listaOpcoes, ListaDeVotantes listaDeVotantes)
     {
+        listaOpcoes.Limpar();
+        listaDeVotantes.Limpar();
+
         Helper.Mensagem("=== Nova votação ===\n", true, false);
         int quantOpcoes = Helper.ValidarSaidaInt("Quantas opções de voto");
         while (quantOpcoes > listaOpcoes.Registro.Count)
         {
             try
             {
-                Helper.Mensagem($"=== {listaOpcoes.Registro.Count + 1}° opção ===\n", true, false);
+                Helper.Mensagem($"=== {listaOpcoes.Registro.Count + 1}ª opção ===\n", true, false);
                 string nome = Helper.ValidarSaidaString("Digite o nome");
                 Opcao opcao = new Opcao(listaOpcoes.NovaChave(), nome);
                 listaOpcoes.Adicionar(opcao);
@@ -88,6 +91,18 @@ public class Menu
             return;   
         }
 
+        if (listaDeVotantes.Registro.Count == 0)
+        {
+            Helper.Mensagem("A lista de votantes está vazia.", true, true);
+            return;
+        }
+
+        if (listaDeVotantes.Registro.All(v => v.JaVotou == true))
+        {
+            Helper.Mensagem("Todos os votantes já votaram", true, true);
+            return;
+        }
+
         int contVotos = 0;
         while (contVotos < listaDeVotantes.Registro.Count)
         {
@@ -129,7 +144,7 @@ public class Menu
         {
             Helper.Mensagem($"=== Votante {votante.Nome} ===\n", true, false);
             Helper.CriarMenu(opcoes);
-            int escolha = Helper.ValidarSaidaInt("\nEscolha uma das opção");
+            int escolha = Helper.ValidarSaidaInt("\nEscolha uma das opções");
             
             var opcao = listaOpcoes.Buscar(escolha);
 
@@ -158,7 +173,7 @@ public class Menu
             return;
         }
 
-        if (listaOpcoes.Registro.Max(o => o.QuantidadeVotos == 0))
+        if (listaOpcoes.Registro.All(o => o.QuantidadeVotos == 0))
         {
             Helper.Mensagem("\nA votação ainda não foi iniciada.", false, true);
             return;
