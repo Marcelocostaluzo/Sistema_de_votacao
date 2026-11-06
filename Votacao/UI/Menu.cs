@@ -1,4 +1,3 @@
-using System.Data.Common;
 using SistemaDeVotacao.Exceptions;
 using SistemaDeVotacao.Helpers;
 using SistemaDeVotacao.Models;
