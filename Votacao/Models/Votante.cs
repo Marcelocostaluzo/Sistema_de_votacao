@@ -11,7 +11,7 @@ public class Votante
     public Votante(string? nome, string? matricula)
     {
         if (string.IsNullOrWhiteSpace(nome)) throw new NomeNaoPodeSerVazioOuNuloException("Nome não pode ser vazio ou nulo.");
-        if (string.IsNullOrWhiteSpace(matricula)) throw new MatriculaNaoPodeSerVazioOuNuloException("Matrícula não pode ser vazia ou nulo.");
+        if (string.IsNullOrWhiteSpace(matricula)) throw new MatriculaNaoPodeSerVazioOuNuloException("Matrícula não pode ser vazia ou nula.");
 
         Nome = nome;
         Matricula = matricula;

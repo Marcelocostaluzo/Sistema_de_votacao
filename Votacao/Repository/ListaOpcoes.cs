@@ -4,7 +4,7 @@ namespace SistemaDeVotacao.Repository;
 
 public class ListaOpcoes <T> where T : IEntidade
 {
-    protected List<T> _opcoes = new List<T>();
+    private List<T> _opcoes = new List<T>();
 
     public IReadOnlyList<T> Registro => _opcoes;
 

@@ -23,7 +23,7 @@ public class Helper
         while (true)
         {
             Console.Write($"{mensagem}: ");
-            if (!string.IsNullOrWhiteSpace(valida = Console.ReadLine()!.Trim())) return valida;
+            if (!string.IsNullOrWhiteSpace(valida = Console.ReadLine()?.Trim() ?? string.Empty)) return valida;
 
             Console.WriteLine("[ERRO] entrada inválida! \nTente novamente.");
         }

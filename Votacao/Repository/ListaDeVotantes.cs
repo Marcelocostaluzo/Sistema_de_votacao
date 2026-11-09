@@ -5,7 +5,7 @@ namespace SistemaDeVotacao.Repository;
 
 public class ListaDeVotantes
 {
-    protected List<Votante> _votantes = new List<Votante>();
+    private List<Votante> _votantes = new List<Votante>();
 
     public IReadOnlyList<Votante> Registro => _votantes;
 
