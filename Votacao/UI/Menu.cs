@@ -10,16 +10,13 @@ public class Menu
     {
         while (true)
         {
-            // Entrada das opções
             string[] opcoes = [ "Nova votação", "Iniciar votação", "Ver resultado", "Histórico", "Sair"];
 
-            // Criação do menu e escolha do usuário
             Helper.Mensagem("=== Menu Principal ===\n", true, false);
             Helper.CriarMenu(opcoes);
 
             int escolha = Helper.ValidarSaidaInt("\nEscolha uma das opções");
 
-            // Encaminha para a determinada função
             switch (escolha) {
                 case 1: Helper.Mensagem("Nova votação \n[A fazer...]", true, true); break;
                 case 2: Helper.Mensagem("Iniciar votação \n[A fazer...]", true, true); break;
